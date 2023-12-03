@@ -6,7 +6,8 @@ Leading the charge in utilizing quantum computing to command vast datasets, enab
 - [Description](#description)
 - [Vision And Mission](#vision-and-mission)
 - [Technologies](#technologies)
-- [Problems To Solve](#problems-to-solve) 
+- [Problems To Solve](#problems-to-solve)
+- [Contributor Guide](#contributor-guide) 
 
 
 # Description 
@@ -63,3 +64,101 @@ QuantumCog Command addresses several critical challenges in the realm of data ma
 
 QuantumCog Command is dedicated to solving these problems, positioning itself as a leader in the quantum computing space with a focus on transforming data management, decision-making processes, and overall computational capabilities.
 
+# Contributor Guide 
+
+**QuantumCog Command GitHub Repository Contributors Guide**
+
+Welcome to the QuantumCog Command community! We appreciate your interest in contributing to our project. Here's a guide to help you get started:
+
+### Table of Contents
+
+1. [Getting Started](#getting-started)
+   - [Fork the Repository](#fork-the-repository)
+   - [Clone Your Fork](#clone-your-fork)
+   - [Set Up Remote Upstream](#set-up-remote-upstream)
+
+2. [Making Changes](#making-changes)
+   - [Create a Branch](#create-a-branch)
+   - [Committing Changes](#committing-changes)
+   - [Syncing Your Fork](#syncing-your-fork)
+
+3. [Submitting Contributions](#submitting-contributions)
+   - [Open a Pull Request](#open-a-pull-request)
+   - [Code Review](#code-review)
+   - [Merge Process](#merge-process)
+
+4. [Community Guidelines](#community-guidelines)
+   - [Code of Conduct](#code-of-conduct)
+   - [Communication Channels](#communication-channels)
+
+### Getting Started
+
+#### Fork the Repository
+
+Click the "Fork" button in the top-right corner of the GitHub repository page. This creates a copy of the repository in your GitHub account.
+
+#### Clone Your Fork
+
+```bash
+git clone https://github.com/KOSASIH/QuantumCog-Command.git
+cd QuantumCog-Command
+```
+
+#### Set Up Remote Upstream
+
+```bash
+git remote add upstream https://github.com/QuantumCog/QuantumCog-Command.git
+```
+
+### Making Changes
+
+#### Create a Branch
+
+```bash
+git checkout -b feature-name
+```
+
+#### Committing Changes
+
+Make your changes, add files, and commit:
+
+```bash
+git add .
+git commit -m "Brief description of changes"
+```
+
+#### Syncing Your Fork
+
+Keep your fork up-to-date with the main repository:
+
+```bash
+git fetch upstream
+git checkout main
+git merge upstream/main
+```
+
+### Submitting Contributions
+
+#### Open a Pull Request
+
+Push your changes and open a pull request from your branch to the main repository's `main` branch.
+
+#### Code Review
+
+Collaborate with maintainers and contributors. Address feedback and make necessary changes.
+
+#### Merge Process
+
+A maintainer will review your changes and merge them into the main branch if they meet project standards.
+
+### Community Guidelines
+
+#### Code of Conduct
+
+Follow our [Code of Conduct](CODE_OF_CONDUCT.md). Treat everyone with respect and create a positive environment for collaboration.
+
+#### Communication Channels
+
+Join our [Slack channel](https://slack.quantumcog.com) for discussions and updates.
+
+Thank you for contributing to QuantumCog Command! Your efforts are valued, and together, we can drive innovation in quantum computing.
