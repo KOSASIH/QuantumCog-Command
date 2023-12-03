@@ -8,7 +8,7 @@ Leading the charge in utilizing quantum computing to command vast datasets, enab
 - [Technologies](#technologies)
 - [Problems To Solve](#problems-to-solve)
 - [Contributor Guide](#contributor-guide)
-- [Tutorial](#tutorials) 
+- [Tutorials](#tutorials) 
 
 
 # Description 
