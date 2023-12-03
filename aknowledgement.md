@@ -33,6 +33,6 @@ Thank you for being a part of the QuantumCog Command community and contributing 
 *KOSASIH*
 
 *Project Lead, QuantumCog Command*  
-[LinkedIn](https://www.linkedin.com/in/yourname)
+[LinkedIn](https://www.linkedin.com/in/kosasih-81b46b5a) 
 
 ---
