@@ -380,3 +380,66 @@ print("Optimal Parameters:", optimal_params)
 In the above code snippet, we define a simple dataset consisting of four data points and two labels. We set the number of layers and shots for training the classifier. Finally, we call the `train_classifier` function to obtain the optimal parameters and print them.
 
 This completes the code implementation of the quantum machine learning model using a quantum variational classifier. You can modify and adapt the code based on your specific requirements and datasets.
+
+```python
+import numpy as np
+from qiskit import QuantumCircuit, Aer, execute
+
+def quantum_pca(dataset, num_components):
+    # Normalize the dataset
+    normalized_data = (dataset - np.mean(dataset, axis=0)) / np.std(dataset, axis=0)
+    
+    # Calculate covariance matrix
+    covariance_matrix = np.cov(normalized_data.T)
+    
+    # Perform eigendecomposition
+    eigenvalues, eigenvectors = np.linalg.eig(covariance_matrix)
+    
+    # Sort eigenvalues and eigenvectors in descending order
+    sorted_indices = np.argsort(eigenvalues)[::-1]
+    sorted_eigenvalues = eigenvalues[sorted_indices]
+    sorted_eigenvectors = eigenvectors[:, sorted_indices]
+    
+    # Select the top k eigenvectors
+    selected_eigenvectors = sorted_eigenvectors[:, :num_components]
+    
+    # Construct the quantum circuit
+    num_qubits = num_components
+    circuit = QuantumCircuit(num_qubits, num_qubits)
+    
+    # Initialize the quantum state
+    circuit.h(range(num_qubits))
+    
+    # Apply the controlled rotation gates
+    for i in range(num_qubits):
+        for j in range(i):
+            circuit.cu3(2 * np.arcsin(selected_eigenvectors[i, j]), 0, 0, j, i)
+    
+    # Perform measurement
+    circuit.measure(range(num_qubits), range(num_qubits))
+    
+    # Simulate the circuit
+    simulator = Aer.get_backend('qasm_simulator')
+    job = execute(circuit, simulator, shots=1000)
+    result = job.result()
+    counts = result.get_counts(circuit)
+    
+    return counts
+
+# Example usage
+dataset = np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9]])
+num_components = 2
+
+counts = quantum_pca(dataset, num_components)
+print(counts)
+```
+
+In this code, we start by normalizing the dataset and calculating the covariance matrix. We then perform eigendecomposition on the covariance matrix to obtain the eigenvalues and eigenvectors. The eigenvalues and eigenvectors are sorted in descending order.
+
+Next, we select the top k eigenvectors based on the desired number of components for PCA. We then construct a quantum circuit with the specified number of qubits.
+
+The quantum circuit begins by initializing the quantum state with a Hadamard gate applied to each qubit. Then, controlled rotation gates are applied to the qubits based on the selected eigenvectors. The controlled rotation gates are parameterized by the angles derived from the selected eigenvectors.
+
+Finally, we perform measurement on the qubits and simulate the circuit using the QASM simulator. The counts of the measurement outcomes are returned as the result.
+
+Note that this code assumes the input dataset is a 2-dimensional numpy array. You can modify the code to handle datasets with different shapes or data types as needed.
