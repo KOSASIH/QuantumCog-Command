@@ -443,3 +443,81 @@ The quantum circuit begins by initializing the quantum state with a Hadamard gat
 Finally, we perform measurement on the qubits and simulate the circuit using the QASM simulator. The counts of the measurement outcomes are returned as the result.
 
 Note that this code assumes the input dataset is a 2-dimensional numpy array. You can modify the code to handle datasets with different shapes or data types as needed.
+
+# Quantum Error Correction
+
+Quantum error correction is a crucial aspect of quantum computing that aims to mitigate the impact of errors that naturally occur in quantum systems. These errors can arise due to various factors such as noise, imperfect gates, and decoherence. By implementing error correction codes, we can protect quantum information and ensure the reliability of quantum computations.
+
+## Types of Errors
+
+There are three types of errors that can occur in a quantum system:
+
+1. **Bit-flip Error (X-error):** This error flips the value of a qubit from 0 to 1 or vice versa. It can be caused by environmental noise or imperfect gate operations.
+
+2. **Phase-flip Error (Z-error):** This error introduces a phase flip on a qubit, changing the sign of its state vector. It can also be caused by noise or imperfect gates.
+
+3. **Bit-phase-flip Error (Y-error):** This error is a combination of bit-flip and phase-flip errors, resulting in a rotation around the y-axis of the Bloch sphere.
+
+## The Need for Error Correction
+
+Quantum error correction is necessary for reliable quantum computation because quantum systems are highly sensitive to errors. Unlike classical bits that can be duplicated and stored redundantly, quantum states cannot be copied due to the no-cloning theorem. Therefore, error correction codes are used to protect quantum information by encoding it into a larger quantum state.
+
+## Basic Error Correction Codes
+
+Two basic error correction codes commonly used in quantum computing are the **bit-flip code** and the **phase-flip code**. Let's explore their implementations:
+
+### Bit-flip Code
+
+The bit-flip code is designed to correct bit-flip errors (X-errors). It encodes a single logical qubit into three physical qubits. The encoding is achieved by applying a CNOT gate between the logical qubit and two ancillary qubits, followed by a Hadamard gate on the logical qubit. This creates an entangled state that can detect and correct bit-flip errors.
+
+```python
+from qiskit import QuantumCircuit, QuantumRegister
+
+# Define the bit-flip code circuit
+def bit_flip_code():
+    # Create a quantum register with 3 qubits
+    qr = QuantumRegister(3)
+    circuit = QuantumCircuit(qr)
+    
+    # Encoding the logical qubit
+    circuit.cx(qr[0], qr[1])
+    circuit.cx(qr[0], qr[2])
+    circuit.h(qr[0])
+    
+    # Error correction
+    # ...
+    
+    return circuit
+```
+
+To correct bit-flip errors, additional error correction steps are required. These steps involve measuring the ancillary qubits and applying appropriate corrections based on the measurement results. However, the error correction process is beyond the scope of this code example.
+
+### Phase-flip Code
+
+The phase-flip code is designed to correct phase-flip errors (Z-errors). Similar to the bit-flip code, it encodes a single logical qubit into three physical qubits. The encoding is achieved by applying a Hadamard gate on the logical qubit, followed by a CNOT gate between the logical qubit and two ancillary qubits. This creates an entangled state that can detect and correct phase-flip errors.
+
+```python
+from qiskit import QuantumCircuit, QuantumRegister
+
+# Define the phase-flip code circuit
+def phase_flip_code():
+    # Create a quantum register with 3 qubits
+    qr = QuantumRegister(3)
+    circuit = QuantumCircuit(qr)
+    
+    # Encoding the logical qubit
+    circuit.h(qr[0])
+    circuit.cx(qr[0], qr[1])
+    circuit.cx(qr[0], qr[2])
+    
+    # Error correction
+    # ...
+    
+    return circuit
+```
+
+Similar to the bit-flip code, additional error correction steps are required to correct phase-flip errors. These steps involve measuring the ancillary qubits and applying appropriate corrections based on the measurement results.
+
+## Conclusion
+
+Quantum error correction is essential for reliable quantum computing. By implementing error correction codes, such as the bit-flip code and the phase-flip code, we can protect quantum information from errors and ensure the accuracy of quantum computations. However, it's important to note that the error correction process involves more complex steps beyond the encoding circuits provided in this code example.
