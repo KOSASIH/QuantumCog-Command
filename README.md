@@ -7,7 +7,8 @@ Leading the charge in utilizing quantum computing to command vast datasets, enab
 - [Vision And Mission](#vision-and-mission)
 - [Technologies](#technologies)
 - [Problems To Solve](#problems-to-solve)
-- [Contributor Guide](#contributor-guide) 
+- [Contributor Guide](#contributor-guide)
+- [Tutorial](#tutorials) 
 
 
 # Description 
@@ -162,3 +163,102 @@ Follow our [Code of Conduct](CODE_OF_CONDUCT.md). Treat everyone with respect an
 Join our [Slack channel](https://slack.quantumcog.com) for discussions and updates.
 
 Thank you for contributing to QuantumCog Command! Your efforts are valued, and together, we can drive innovation in quantum computing.
+
+# Tutorials 
+
+# Quantum Database Search using Grover's Algorithm
+
+Grover's algorithm is a quantum algorithm that can be used to search an unstructured database with N items in O(sqrt(N)) time complexity, which is exponentially faster than classical algorithms.
+
+## Algorithm Overview:
+1. Initialize the quantum state to a superposition of all possible inputs.
+2. Apply the oracle to mark the target item(s).
+3. Perform the Grover iteration, which consists of applying the inversion about the average and applying the oracle.
+4. Repeat the Grover iteration for a certain number of times to amplify the amplitude of the target item(s).
+5. Measure the quantum state to obtain the solution(s).
+
+## Implementation Steps:
+
+### Step 1: Initialize the Quantum State
+First, we need to initialize the quantum state to a superposition of all possible inputs. We can achieve this by applying a Hadamard gate to each qubit.
+
+```python
+from qiskit import QuantumCircuit, Aer, execute
+
+def initialize_state(circuit, n):
+    for i in range(n):
+        circuit.h(i)
+```
+
+### Step 2: Apply the Oracle
+The oracle is a quantum gate that marks the target item(s) in the database. It flips the phase of the target item(s) while leaving the other items unchanged. The specific implementation of the oracle depends on the problem and the database structure.
+
+```python
+def apply_oracle(circuit, n, marked_items):
+    # Apply a phase flip to the marked items
+    for item in marked_items:
+        circuit.z(item)
+```
+
+### Step 3: Perform the Grover Iteration
+The Grover iteration consists of two steps: applying the inversion about the average and applying the oracle.
+
+```python
+def grover_iteration(circuit, n, marked_items):
+    # Apply the inversion about the average
+    circuit.h(range(n))
+    circuit.x(range(n))
+    circuit.h(n-1)
+    circuit.mct(list(range(n-1)), n-1)
+    circuit.h(n-1)
+    circuit.x(range(n))
+    circuit.h(range(n))
+    
+    # Apply the oracle
+    apply_oracle(circuit, n, marked_items)
+```
+
+### Step 4: Repeat the Grover Iteration
+To amplify the amplitude of the target item(s), we need to repeat the Grover iteration for a certain number of times. The optimal number of iterations depends on the size of the database and can be approximated as sqrt(N).
+
+```python
+def grover_search(database, marked_items):
+    n = len(database)
+    num_iterations = int(round(np.sqrt(n)))
+    
+    # Create a quantum circuit with n qubits
+    circuit = QuantumCircuit(n, n)
+    
+    # Step 1: Initialize the quantum state
+    initialize_state(circuit, n)
+    
+    # Step 2 and 3: Apply the oracle and perform the Grover iteration
+    for _ in range(num_iterations):
+        grover_iteration(circuit, n, marked_items)
+    
+    # Measure the quantum state
+    circuit.measure(range(n), range(n))
+    
+    # Simulate the circuit
+    simulator = Aer.get_backend('qasm_simulator')
+    job = execute(circuit, simulator, shots=1)
+    result = job.result().get_counts(circuit)
+    
+    # Extract the solution(s) from the measurement result
+    solutions = [int(key[::-1], 2) for key in result.keys()]
+    
+    return solutions
+```
+
+### Step 5: Measure the Quantum State
+Finally, we measure the quantum state to obtain the solution(s). We can use a quantum simulator or an actual quantum computer to execute the circuit and obtain the measurement result.
+
+```python
+database = ['item1', 'item2', 'item3', 'item4']
+marked_items = [2]  # Index of the target item(s) in the database
+
+solutions = grover_search(database, marked_items)
+print("Solutions:", solutions)
+```
+
+This is a basic implementation of the quantum database search using Grover's algorithm. The specific implementation of the oracle and the database structure may vary depending on the problem.
